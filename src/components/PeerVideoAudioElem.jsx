@@ -1,7 +1,7 @@
 import { useHuddleStore } from "@huddle01/huddle01-client/store";
 import React, { useCallback, useEffect, useRef } from "react";
 
-const PeerVideoAudioElem = ({ peerIdAtIndex }) => {
+const PeerVideoAudioElem = ({ peerIdAtIndex, turnVideoOn }) => {
   const videoRef = useRef(null);
   const audioRef = useRef(null);
 
@@ -55,18 +55,23 @@ const PeerVideoAudioElem = ({ peerIdAtIndex }) => {
     }
   }, [peerMicTrack]);
 
-  return (
-    <div style={{ width: "50%" }}>
-      <video
-        ref={videoRef}
-        muted
-        autoPlay
-        playsInline
-        style={{ width: "100%" }}
-      />
-      <audio ref={audioRef} autoPlay playsInline controls={false}></audio>
-    </div>
-  );
+  if(turnVideoOn){
+    return (
+      <div style={{ width: "50%" }}>
+        <video
+          ref={videoRef}
+          muted
+          autoPlay
+          playsInline
+          style={{ width: "100%" }} /><audio ref={audioRef} autoPlay playsInline controls={false}></audio>
+      </div>);
+  }else{
+    return (
+      <div style={{ width: "50%" }}> 
+        <audio ref={audioRef} autoPlay playsInline controls={false}></audio>
+      </div>
+    );
+  }
 };
 
 export default React.memo(PeerVideoAudioElem);
